@@ -77,6 +77,8 @@ For any $f \in Hom(\Vect)$,
 
 The previous section only explored the properties of $U$ and $F$. This section now dives into $(U \dashv F)$.
 
+\subsection{$\eta$}
+
 % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQAlEAX1PU1z5CKcqWLU6TVuxgB9cjz4gM2PASIBmMRIYs2iEACY5C3v1VCiowzqn6QAHQdxmAWwAEAa1kArJwAt6HGAoX25Fc0F1FC0bGl1pAwAxAFUubgkYKABzeCJQADMAJwhXJFEQHAgkQ3i7dgKIkGLS8poqpA0zZpKyxFrK6sQAFjq9dicYHHpZYCdXIP8AIyXgDm5w7pa+rUGkUclx5JTGrd6kMj3ECoT7AEkoJu2L9qHdxnolmEYABQE1YQgRgwAo4EBjRIgVI8SjcIA
 \begin{tikzcd}
                                     & e_1 \arrow[rr, "f"] \arrow[dd, "\eta_{\R}"]      &  & 2e_1 \arrow[d, "\eta_{\mathbb{R}}"] \\
@@ -103,13 +105,36 @@ By definition of natural transformation we should now have that $\eta_V \circ f
 The only way $L = R$ is if $\eta_V(e_1) = 0$. $\eta$ must be trivial: its components map every
 vector space to zero.
 
+\subsubsection{Conclusion}
+
+I expected $\eta: Id \rightarrow FU$ to be impossible but instead got a result
+that such natural transformation may exist, but it's trivial.
+
+\subsection{$\epsilon$}
+
+Does a natural transformation $\epsilon: UF \rightarrow Id$ exist? Turns out it can't.
+
+Let's assume that $\epsilon$ does exist.
+Let's take a two-element set $S = \{s_1, s_2\}$, a function $g \in Hom(\Set), g(s_i) = s_{3-i}$.
+Let's denote the image $UFg(\widehat{s_1 + s_2})$ as $s_m$.
+
+\begin{tikzcd}
+  \widehat{s_1 + s_2} \arrow[r, "UFg"] \arrow[d, "\epsilon_{S}"]   & \widehat{s_1 + s_2} \\
+  s_m \arrow[r, "g"] & s_{3-m}
+\end{tikzcd}
+
+Turns out that the diagram of the natural transformation doesn't commute. We have
+
+\begin{enumerate}
+  \item $\epsilon_S(g(\widehat{s_1 + s_2})) = \epsilon_S(\widehat{s_2 + s_1}) = s_m$
+  \item $g(\epsilon_S(\widehat{s_1 + s_2})) = g(s_m) = s_{3-m}$
+\end{enumerate}
+
+This proves that $\epsilon$ can't exist.
+
 \section{Conclusion}
 
-I expected $U \dashv L$ to be false but instead got a result that such
-adjunction may exist, but it's trivial.
-
-I'm not sure if I missed any crucial assumption that would show impossibility,
-or whether mathematicians have something interesting about this result.
+I have proven that $\lnot (U \dashv F)$, because the counit of such adjunction doesn't exist.
 
 \section{See Also}
 
