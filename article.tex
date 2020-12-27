@@ -1,0 +1,119 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\usepackage{tikz-cd}
+\usetikzlibrary{quotes,babel,angles}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Vect}{\mathbf{Vect}}
+
+\title{Can free vector space functor be the right-adjoint of a forgetful functor?}
+\author{Grzegorz Milka}
+\date{27. December 2020}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Intro}
+
+I wanted to better understand adjunctions, so I asked myself whether I know any
+example where \(L \dashv R\) but not \(R \dashv L\).
+
+I knew that free and forgetful functors
+were classical examples of adjunct functors. If I flipped the relation,
+could a forgetful functor be a left-adjoint of a free functor? Say, a free
+functor of linear spaces, \(F: \Set \rightarrow \Vect_{\R}\)?
+
+\section{Understanding the objects}
+
+Let's start with exploring the relevant objects.
+
+\subsection{$F$}
+
+Let $F: \Set \rightarrow \Vect_{\R}$ be the free functor.
+
+For any $B \in \Set$, $FB = lin(b), b \in B$ that is $FB$ is the vector space over $\R$
+with elements of $B$ as its base.
+
+How does $F$ map functions? Let $f: B \rightarrow C, f \in hom(Set)$, then
+
+ \begin{align*}
+  Ff: FB &\rightarrow FC\\
+  Ff\left(\sum k_ib_i\right) &= \sum k_i f(b_i)
+  \end{align*}
+
+\subsection{$U$}
+
+Let $U: \Vect_{\R} \rightarrow \Set$ be the forgetful functor.
+
+For any $V \in \Vect$, $UB = B$. To avoid confusion, I'll note elements of $B
+\in \Set$ with a hat, e.g. $\hat{b}$.
+
+Functions are also mapped 1-to-1.
+
+\subsection{$FU$}
+
+$FU: \Vect \rightarrow \Vect$ is an endofunctor. I'll denote mapped vector
+spaced $V$ as $\hat{V}$.  Elements of $\hat{V}$ have form $k(\hat{lv}), v \in
+V, \, k, l \in \R$.
+
+It's crucial to understand how $FU$ maps linear morphisms. The mapped morphism are linear in the vector space introduced by $F$, any they also act on the unstructured elements under the hat, $\hat{\cdot}$.
+For any $f \in Hom(\Vect)$,
+\[FUf\left(\sum k_i(\widehat{\sum l_j v_j})\right)
+= \sum k_i \left(
+                 \widehat{f \left(\sum l_j v_j \right)}
+           \right) \]
+
+\section{$U \dashv F$}
+
+The previous section only explored the properties of $U$ and $F$. This section now dives into $(U \dashv F)$.
+
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQAlEAX1PU1z5CKcqWLU6TVuxgB9cjz4gM2PASIBmMRIYs2iEACY5C3v1VCiowzqn6QAHQdxmAWwAEAa1kArJwAt6HGAoX25Fc0F1FC0bGl1pAwAxAFUubgkYKABzeCJQADMAJwhXJFEQHAgkQ3i7dgKIkGLS8poqpA0zZpKyxFrK6sQAFjq9dicYHHpZYCdXIP8AIyXgDm5w7pa+rUGkUclx5JTGrd6kMj3ECoT7AEkoJu2L9qHdxnolmEYABQE1YQgRgwAo4EBjRIgVI8SjcIA
+\begin{tikzcd}
+                                    & e_1 \arrow[rr, "f"] \arrow[dd, "\eta_{\R}"]      &  & 2e_1 \arrow[d, "\eta_{\mathbb{R}}"] \\
+  R \arrow[ru, "Id"] \arrow[rd, "FU"] &                                     &  &              \sum 2k_j\hat{d_j}                        \\
+                                    & \sum k_j\hat{d_j} \arrow[r, "FUf"] & \sum k_j\hat{2d_j}  &
+\end{tikzcd}
+
+Let's assume a natural transformation $\eta: Id_V \rightarrow FU$ exists. Let's
+take $V = \R$ with $e_1$ as its base.
+Let's denote the component of $\eta$ on $V$ as $\eta_V$.
+By definition of natural transformation, $\eta_V$ is a linear morphism. Let's
+denote mapped base as $\eta_V(e_1) = \sum_j  k_{j}\hat{d_{j}}, d_{j} \in V$.
+
+Let's now take a linear morphism $f: V \rightarrow V, f(e) = 2e$.
+By definition of natural transformation we should now have that $\eta_V \circ f
+= FUf \circ \eta_V$. Let's see how this equation acts on $e_1$.
+
+\begin{enumerate}
+  \item $L = \eta_V(f(e_1)) = \eta_V(2e_1) = 2\sum_j k_{j} \hat{d_{j}}$ (the last transformation used the fact that $\eta_V$ is linear).
+  \item $R = FUf(\eta_V(e_1)) = FUf\left(\sum_j k_{j} \hat{d_{j}}\right)
+      = \sum_j k_{j} \widehat{2d_{j}}$
+\end{enumerate}
+
+The only way $L = R$ is if $\eta_V(e_1) = 0$. $\eta$ must be trivial: its components map every
+vector space to zero.
+
+\section{Conclusion}
+
+I expected $U \dashv L$ to be false but instead got a result that such
+adjunction may exist, but it's trivial.
+
+I'm not sure if I missed any crucial assumption that would show impossibility,
+or whether mathematicians have something interesting about this result.
+
+\section{See Also}
+
+* \href{https://ncatlab.org/nlab/show/Vect}{Vect on nLab}
+
+
+\end{document}
